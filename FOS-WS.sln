@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS-WS", "FOS-WS\FOS-WS.csproj", "{5216BDB2-40A2-49A6-93AA-4EFFD4F068E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5216BDB2-40A2-49A6-93AA-4EFFD4F068E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5216BDB2-40A2-49A6-93AA-4EFFD4F068E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5216BDB2-40A2-49A6-93AA-4EFFD4F068E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5216BDB2-40A2-49A6-93AA-4EFFD4F068E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {988AF03E-0277-4DCC-9F0B-98503DA6BC33}
+	EndGlobalSection
+EndGlobal
