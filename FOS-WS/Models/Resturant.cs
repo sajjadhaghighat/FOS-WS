@@ -23,7 +23,7 @@ namespace FOS_WS.Models
     
         public int RID { get; set; }
         public string Rname { get; set; }
-        public string Raddress { get; set; }
+        public string Rstatus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menus { get; set; }

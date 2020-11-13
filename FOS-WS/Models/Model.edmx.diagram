@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fa5f5c7c07ad47aa85fcfb1befcf36ef" Name="Diagram1">
+      <Diagram DiagramId="3a495e38aeeb4a2fbbacf372d5dbb535" Name="Diagram1">
         <EntityTypeShape EntityType="FOSWSDBModel.Food" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FOSWSDBModel.Order" Width="1.5" PointX="3.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FOSWSDBModel.Resturant" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
@@ -12,13 +12,13 @@
         <EntityTypeShape EntityType="FOSWSDBModel.Menu" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FOSWSDBModel.OrderDetail" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
         <AssociationConnector Association="FOSWSDBModel.FDEL" ManuallyRouted="false" />
-        <AssociationConnector Association="FOSWSDBModel.FK__Menu__FID__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="FOSWSDBModel.FK__Menu__FID__24927208" ManuallyRouted="false" />
         <AssociationConnector Association="FOSWSDBModel.FK__OrderDetail__FID__1DE57479" ManuallyRouted="false" />
         <AssociationConnector Association="FOSWSDBModel.OFDEL" ManuallyRouted="false" />
         <AssociationConnector Association="FOSWSDBModel.FK__OrderDetail__OID__1CF15040" ManuallyRouted="false" />
         <AssociationConnector Association="FOSWSDBModel.FK__Orders__UID__164452B1" ManuallyRouted="false" />
         <AssociationConnector Association="FOSWSDBModel.ODEL" ManuallyRouted="false" />
-        <AssociationConnector Association="FOSWSDBModel.FK__Menu__RID__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="FOSWSDBModel.FK__Menu__RID__239E4DCF" ManuallyRouted="false" />
         <AssociationConnector Association="FOSWSDBModel.RDEL" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

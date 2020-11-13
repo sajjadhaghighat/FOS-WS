@@ -13,10 +13,10 @@ namespace FOS_WS.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FOSWSDBEntities : DbContext
+    public partial class FOSWSDB : DbContext
     {
-        public FOSWSDBEntities()
-            : base("name=FOSWSDBEntities")
+        public FOSWSDB()
+            : base("name=FOSWSDB")
         {
         }
     

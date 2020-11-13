@@ -18,10 +18,12 @@ warning 6002: The table/view 'FOSWSDB.dbo.Menu' does not have a primary key defi
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="Price" />
+            <PropertyRef Name="Qty" />
           </Key>
           <Property Name="RID" Type="int" />
           <Property Name="FID" Type="int" />
           <Property Name="Price" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -51,7 +53,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
           </Key>
           <Property Name="RID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Rname" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Raddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="Rstatus" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -78,7 +80,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Menu__FID__1920BF5C">
+        <Association Name="FK__Menu__FID__24927208">
           <End Role="Foods" Type="Self.Foods" Multiplicity="0..1" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -90,7 +92,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Menu__RID__182C9B23">
+        <Association Name="FK__Menu__RID__239E4DCF">
           <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -189,7 +191,8 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             <DefiningQuery>SELECT 
     [Menu].[RID] AS [RID], 
     [Menu].[FID] AS [FID], 
-    [Menu].[Price] AS [Price]
+    [Menu].[Price] AS [Price], 
+    [Menu].[Qty] AS [Qty]
     FROM [dbo].[Menu] AS [Menu]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" store:Type="Tables" store:Schema="dbo">
@@ -203,11 +206,11 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             <End Role="Foods" EntitySet="Foods" />
             <End Role="Menu" EntitySet="Menu" />
           </AssociationSet>
-          <AssociationSet Name="FK__Menu__FID__1920BF5C" Association="Self.FK__Menu__FID__1920BF5C">
+          <AssociationSet Name="FK__Menu__FID__24927208" Association="Self.FK__Menu__FID__24927208">
             <End Role="Foods" EntitySet="Foods" />
             <End Role="Menu" EntitySet="Menu" />
           </AssociationSet>
-          <AssociationSet Name="FK__Menu__RID__182C9B23" Association="Self.FK__Menu__RID__182C9B23">
+          <AssociationSet Name="FK__Menu__RID__239E4DCF" Association="Self.FK__Menu__RID__239E4DCF">
             <End Role="Resturant" EntitySet="Resturant" />
             <End Role="Menu" EntitySet="Menu" />
           </AssociationSet>
@@ -249,7 +252,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
           <Property Name="Fname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Menus" Relationship="Self.FDEL" FromRole="Foods" ToRole="Menu" />
-          <NavigationProperty Name="Menus1" Relationship="Self.FK__Menu__FID__1920BF5C" FromRole="Foods" ToRole="Menu" />
+          <NavigationProperty Name="Menus1" Relationship="Self.FK__Menu__FID__24927208" FromRole="Foods" ToRole="Menu" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDetail__FID__1DE57479" FromRole="Foods" ToRole="OrderDetails" />
           <NavigationProperty Name="OrderDetails1" Relationship="Self.OFDEL" FromRole="Foods" ToRole="OrderDetails" />
         </EntityType>
@@ -274,8 +277,8 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
           </Key>
           <Property Name="RID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Raddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK__Menu__RID__182C9B23" FromRole="Resturant" ToRole="Menu" />
+          <Property Name="Rstatus" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Menus" Relationship="Self.FK__Menu__RID__239E4DCF" FromRole="Resturant" ToRole="Menu" />
           <NavigationProperty Name="Menus1" Relationship="Self.RDEL" FromRole="Resturant" ToRole="Menu" />
         </EntityType>
         <EntityType Name="User">
@@ -293,13 +296,15 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="Price" />
+            <PropertyRef Name="Qty" />
           </Key>
           <Property Name="RID" Type="Int32" />
           <Property Name="FID" Type="Int32" />
           <Property Name="Price" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Food" Relationship="Self.FDEL" FromRole="Menu" ToRole="Foods" />
-          <NavigationProperty Name="Food1" Relationship="Self.FK__Menu__FID__1920BF5C" FromRole="Menu" ToRole="Foods" />
-          <NavigationProperty Name="Resturant" Relationship="Self.FK__Menu__RID__182C9B23" FromRole="Menu" ToRole="Resturant" />
+          <NavigationProperty Name="Food1" Relationship="Self.FK__Menu__FID__24927208" FromRole="Menu" ToRole="Foods" />
+          <NavigationProperty Name="Resturant" Relationship="Self.FK__Menu__RID__239E4DCF" FromRole="Menu" ToRole="Resturant" />
           <NavigationProperty Name="Resturant1" Relationship="Self.RDEL" FromRole="Menu" ToRole="Resturant" />
         </EntityType>
         <EntityType Name="OrderDetail">
@@ -328,7 +333,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Menu__FID__1920BF5C">
+        <Association Name="FK__Menu__FID__24927208">
           <End Role="Foods" Type="Self.Food" Multiplicity="0..1" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -404,7 +409,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Menu__RID__182C9B23">
+        <Association Name="FK__Menu__RID__239E4DCF">
           <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -430,7 +435,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FOSWSDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FOSWSDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Foods" EntityType="Self.Food" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Resturants" EntityType="Self.Resturant" />
@@ -441,7 +446,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             <End Role="Foods" EntitySet="Foods" />
             <End Role="Menu" EntitySet="Menus" />
           </AssociationSet>
-          <AssociationSet Name="FK__Menu__FID__1920BF5C" Association="Self.FK__Menu__FID__1920BF5C">
+          <AssociationSet Name="FK__Menu__FID__24927208" Association="Self.FK__Menu__FID__24927208">
             <End Role="Foods" EntitySet="Foods" />
             <End Role="Menu" EntitySet="Menus" />
           </AssociationSet>
@@ -465,7 +470,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__Menu__RID__182C9B23" Association="Self.FK__Menu__RID__182C9B23">
+          <AssociationSet Name="FK__Menu__RID__239E4DCF" Association="Self.FK__Menu__RID__239E4DCF">
             <End Role="Resturant" EntitySet="Resturants" />
             <End Role="Menu" EntitySet="Menus" />
           </AssociationSet>
@@ -479,7 +484,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FOSWSDBModelStoreContainer" CdmEntityContainer="FOSWSDBEntities">
+        <EntityContainerMapping StorageEntityContainer="FOSWSDBModelStoreContainer" CdmEntityContainer="FOSWSDB">
           <EntitySetMapping Name="Foods">
             <EntityTypeMapping TypeName="FOSWSDBModel.Food">
               <MappingFragment StoreEntitySet="Foods">
@@ -507,7 +512,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
               <MappingFragment StoreEntitySet="Resturant">
                 <ScalarProperty Name="RID" ColumnName="RID" />
                 <ScalarProperty Name="Rname" ColumnName="Rname" />
-                <ScalarProperty Name="Raddress" ColumnName="Raddress" />
+                <ScalarProperty Name="Rstatus" ColumnName="Rstatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -529,6 +534,7 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
                 <ScalarProperty Name="RID" ColumnName="RID" />
                 <ScalarProperty Name="FID" ColumnName="FID" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

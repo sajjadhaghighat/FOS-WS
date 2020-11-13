@@ -17,6 +17,7 @@ namespace FOS_WS.Models
         public Nullable<int> RID { get; set; }
         public Nullable<int> FID { get; set; }
         public string Price { get; set; }
+        public int Qty { get; set; }
     
         public virtual Food Food { get; set; }
         public virtual Food Food1 { get; set; }
