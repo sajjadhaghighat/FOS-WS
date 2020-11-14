@@ -14,25 +14,16 @@ namespace FOS_WS.Models
     
     public partial class Order
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
-        {
-            this.OrderDetails = new HashSet<OrderDetail>();
-            this.OrderDetails1 = new HashSet<OrderDetail>();
-        }
-    
         public int OID { get; set; }
-        public int Qty { get; set; }
+        public int Oqty { get; set; }
         public string Phone { get; set; }
         public string Timestamp { get; set; }
         public string Price { get; set; }
         public string Status { get; set; }
         public Nullable<int> UID { get; set; }
+        public Nullable<int> FID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails1 { get; set; }
+        public virtual Food Food { get; set; }
     }
 }

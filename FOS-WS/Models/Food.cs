@@ -17,23 +17,19 @@ namespace FOS_WS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Food()
         {
-            this.Menus = new HashSet<Menu>();
-            this.Menus1 = new HashSet<Menu>();
-            this.OrderDetails = new HashSet<OrderDetail>();
-            this.OrderDetails1 = new HashSet<OrderDetail>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int FID { get; set; }
         public string Fname { get; set; }
         public string Description { get; set; }
+        public string Price { get; set; }
+        public int Fqty { get; set; }
+        public Nullable<int> RID { get; set; }
     
+        public virtual Resturant Resturant { get; set; }
+        public virtual Resturant Resturant1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Menu> Menus { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Menu> Menus1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails1 { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

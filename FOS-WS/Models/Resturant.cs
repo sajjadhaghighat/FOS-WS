@@ -17,8 +17,8 @@ namespace FOS_WS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Resturant()
         {
-            this.Menus = new HashSet<Menu>();
-            this.Menus1 = new HashSet<Menu>();
+            this.Foods = new HashSet<Food>();
+            this.Foods1 = new HashSet<Food>();
         }
     
         public int RID { get; set; }
@@ -26,8 +26,8 @@ namespace FOS_WS.Models
         public string Rstatus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Menu> Menus { get; set; }
+        public virtual ICollection<Food> Foods { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Menu> Menus1 { get; set; }
+        public virtual ICollection<Food> Foods1 { get; set; }
     }
 }

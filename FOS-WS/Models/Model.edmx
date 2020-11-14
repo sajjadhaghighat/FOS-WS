@@ -4,48 +4,30 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FOSWSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Foods">
+    <Schema Namespace="FOSWSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Food">
           <Key>
             <PropertyRef Name="FID" />
           </Key>
           <Property Name="FID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Fname" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="255" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FOSWSDB.dbo.Menu' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Menu">
-          <Key>
-            <PropertyRef Name="Price" />
-            <PropertyRef Name="Qty" />
-          </Key>
-          <Property Name="RID" Type="int" />
-          <Property Name="FID" Type="int" />
           <Property Name="Price" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Qty" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="OrderDetails">
-          <Key>
-            <PropertyRef Name="Qty" />
-          </Key>
-          <Property Name="OID" Type="int" />
-          <Property Name="FID" Type="int" />
-          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="Fqty" Type="int" Nullable="false" />
+          <Property Name="RID" Type="int" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="OID" />
           </Key>
           <Property Name="OID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="Oqty" Type="int" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Timestamp" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Price" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="UID" Type="int" />
+          <Property Name="FID" Type="int" />
         </EntityType>
         <EntityType Name="Resturant">
           <Key>
@@ -66,69 +48,31 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
           <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
-        <Association Name="FDEL">
-          <End Role="Foods" Type="Self.Foods" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Foods">
-              <PropertyRef Name="FID" />
-            </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="FID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Menu__FID__24927208">
-          <End Role="Foods" Type="Self.Foods" Multiplicity="0..1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Foods">
-              <PropertyRef Name="FID" />
-            </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="FID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Menu__RID__239E4DCF">
+        <Association Name="FK__Food__RID__145C0A3F">
           <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resturant">
               <PropertyRef Name="RID" />
             </Principal>
-            <Dependent Role="Menu">
+            <Dependent Role="Food">
               <PropertyRef Name="RID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderDetail__FID__1DE57479">
-          <End Role="Foods" Type="Self.Foods" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+        <Association Name="FK__Orders__FID__1920BF5C">
+          <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Foods">
+            <Principal Role="Food">
               <PropertyRef Name="FID" />
             </Principal>
-            <Dependent Role="OrderDetails">
+            <Dependent Role="Orders">
               <PropertyRef Name="FID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderDetail__OID__1CF15040">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OID" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__UID__164452B1">
+        <Association Name="FK__Orders__UID__182C9B23">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -140,107 +84,43 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ODEL">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OID" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="OFDEL">
-          <End Role="Foods" Type="Self.Foods" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Foods">
-              <PropertyRef Name="FID" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="FID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="RDEL">
           <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resturant">
               <PropertyRef Name="RID" />
             </Principal>
-            <Dependent Role="Menu">
+            <Dependent Role="Food">
               <PropertyRef Name="RID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FOSWSDBModelStoreContainer">
-          <EntitySet Name="Foods" EntityType="Self.Foods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Food" EntityType="Self.Food" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resturant" EntityType="Self.Resturant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Menu" EntityType="Self.Menu" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Menu].[RID] AS [RID], 
-    [Menu].[FID] AS [FID], 
-    [Menu].[Price] AS [Price], 
-    [Menu].[Qty] AS [Qty]
-    FROM [dbo].[Menu] AS [Menu]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OrderDetails].[OID] AS [OID], 
-    [OrderDetails].[FID] AS [FID], 
-    [OrderDetails].[Qty] AS [Qty]
-    FROM [dbo].[OrderDetails] AS [OrderDetails]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FDEL" Association="Self.FDEL">
-            <End Role="Foods" EntitySet="Foods" />
-            <End Role="Menu" EntitySet="Menu" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Menu__FID__24927208" Association="Self.FK__Menu__FID__24927208">
-            <End Role="Foods" EntitySet="Foods" />
-            <End Role="Menu" EntitySet="Menu" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Menu__RID__239E4DCF" Association="Self.FK__Menu__RID__239E4DCF">
+          <AssociationSet Name="FK__Food__RID__145C0A3F" Association="Self.FK__Food__RID__145C0A3F">
             <End Role="Resturant" EntitySet="Resturant" />
-            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Food" EntitySet="Food" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderDetail__FID__1DE57479" Association="Self.FK__OrderDetail__FID__1DE57479">
-            <End Role="Foods" EntitySet="Foods" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderDetail__OID__1CF15040" Association="Self.FK__OrderDetail__OID__1CF15040">
+          <AssociationSet Name="FK__Orders__FID__1920BF5C" Association="Self.FK__Orders__FID__1920BF5C">
+            <End Role="Food" EntitySet="Food" />
             <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__UID__164452B1" Association="Self.FK__Orders__UID__164452B1">
+          <AssociationSet Name="FK__Orders__UID__182C9B23" Association="Self.FK__Orders__UID__182C9B23">
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="ODEL" Association="Self.ODEL">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="OFDEL" Association="Self.OFDEL">
-            <End Role="Foods" EntitySet="Foods" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="RDEL" Association="Self.RDEL">
             <End Role="Resturant" EntitySet="Resturant" />
-            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Food" EntitySet="Food" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FOSWSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -251,25 +131,27 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
           <Property Name="FID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Fname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Menus" Relationship="Self.FDEL" FromRole="Foods" ToRole="Menu" />
-          <NavigationProperty Name="Menus1" Relationship="Self.FK__Menu__FID__24927208" FromRole="Foods" ToRole="Menu" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDetail__FID__1DE57479" FromRole="Foods" ToRole="OrderDetails" />
-          <NavigationProperty Name="OrderDetails1" Relationship="Self.OFDEL" FromRole="Foods" ToRole="OrderDetails" />
+          <Property Name="Price" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fqty" Type="Int32" Nullable="false" />
+          <Property Name="RID" Type="Int32" />
+          <NavigationProperty Name="Resturant" Relationship="Self.FK__Food__RID__145C0A3F" FromRole="Food" ToRole="Resturant" />
+          <NavigationProperty Name="Resturant1" Relationship="Self.RDEL" FromRole="Food" ToRole="Resturant" />
+          <NavigationProperty Name="Orders" Relationship="FOSWSDBModel.FK__Orders__FID__1920BF5C" FromRole="Food" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="OID" />
           </Key>
           <Property Name="OID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="Oqty" Type="Int32" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Timestamp" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UID" Type="Int32" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDetail__OID__1CF15040" FromRole="Orders" ToRole="OrderDetails" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Orders__UID__164452B1" FromRole="Orders" ToRole="Users" />
-          <NavigationProperty Name="OrderDetails1" Relationship="Self.ODEL" FromRole="Orders" ToRole="OrderDetails" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Orders__UID__182C9B23" FromRole="Orders" ToRole="Users" />
+          <Property Name="FID" Type="Int32" />
+          <NavigationProperty Name="Food" Relationship="FOSWSDBModel.FK__Orders__FID__1920BF5C" FromRole="Order" ToRole="Food" />
         </EntityType>
         <EntityType Name="Resturant">
           <Key>
@@ -278,8 +160,8 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
           <Property Name="RID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rstatus" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK__Menu__RID__239E4DCF" FromRole="Resturant" ToRole="Menu" />
-          <NavigationProperty Name="Menus1" Relationship="Self.RDEL" FromRole="Resturant" ToRole="Menu" />
+          <NavigationProperty Name="Foods" Relationship="Self.FK__Food__RID__145C0A3F" FromRole="Resturant" ToRole="Food" />
+          <NavigationProperty Name="Foods1" Relationship="Self.RDEL" FromRole="Resturant" ToRole="Food" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -291,99 +173,35 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
           <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UID__164452B1" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UID__182C9B23" FromRole="Users" ToRole="Orders" />
         </EntityType>
-        <EntityType Name="Menu">
-          <Key>
-            <PropertyRef Name="Price" />
-            <PropertyRef Name="Qty" />
-          </Key>
-          <Property Name="RID" Type="Int32" />
-          <Property Name="FID" Type="Int32" />
-          <Property Name="Price" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Qty" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Food" Relationship="Self.FDEL" FromRole="Menu" ToRole="Foods" />
-          <NavigationProperty Name="Food1" Relationship="Self.FK__Menu__FID__24927208" FromRole="Menu" ToRole="Foods" />
-          <NavigationProperty Name="Resturant" Relationship="Self.FK__Menu__RID__239E4DCF" FromRole="Menu" ToRole="Resturant" />
-          <NavigationProperty Name="Resturant1" Relationship="Self.RDEL" FromRole="Menu" ToRole="Resturant" />
-        </EntityType>
-        <EntityType Name="OrderDetail">
-          <Key>
-            <PropertyRef Name="Qty" />
-          </Key>
-          <Property Name="OID" Type="Int32" />
-          <Property Name="FID" Type="Int32" />
-          <Property Name="Qty" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Food" Relationship="Self.FK__OrderDetail__FID__1DE57479" FromRole="OrderDetails" ToRole="Foods" />
-          <NavigationProperty Name="Food1" Relationship="Self.OFDEL" FromRole="OrderDetails" ToRole="Foods" />
-          <NavigationProperty Name="Order" Relationship="Self.FK__OrderDetail__OID__1CF15040" FromRole="OrderDetails" ToRole="Orders" />
-          <NavigationProperty Name="Order1" Relationship="Self.ODEL" FromRole="OrderDetails" ToRole="Orders" />
-        </EntityType>
-        <Association Name="FDEL">
-          <End Role="Foods" Type="Self.Food" Multiplicity="0..1">
+        <Association Name="FK__Food__RID__145C0A3F">
+          <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1" />
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resturant">
+              <PropertyRef Name="RID" />
+            </Principal>
+            <Dependent Role="Food">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RDEL">
+          <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Foods">
-              <PropertyRef Name="FID" />
+            <Principal Role="Resturant">
+              <PropertyRef Name="RID" />
             </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="FID" />
+            <Dependent Role="Food">
+              <PropertyRef Name="RID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Menu__FID__24927208">
-          <End Role="Foods" Type="Self.Food" Multiplicity="0..1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Foods">
-              <PropertyRef Name="FID" />
-            </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="FID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__OrderDetail__FID__1DE57479">
-          <End Role="Foods" Type="Self.Food" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Foods">
-              <PropertyRef Name="FID" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="FID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="OFDEL">
-          <End Role="Foods" Type="Self.Food" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Foods">
-              <PropertyRef Name="FID" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="FID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__OrderDetail__OID__1CF15040">
-          <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OID" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__UID__164452B1">
+        <Association Name="FK__Orders__UID__182C9B23">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -395,90 +213,40 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ODEL">
-          <End Role="Orders" Type="Self.Order" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OID" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="OID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Menu__RID__239E4DCF">
-          <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Resturant">
-              <PropertyRef Name="RID" />
-            </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="RID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="RDEL">
-          <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Resturant">
-              <PropertyRef Name="RID" />
-            </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="RID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FOSWSDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Foods" EntityType="Self.Food" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Resturants" EntityType="Self.Resturant" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="Menus" EntityType="Self.Menu" />
-          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
-          <AssociationSet Name="FDEL" Association="Self.FDEL">
-            <End Role="Foods" EntitySet="Foods" />
-            <End Role="Menu" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Menu__FID__24927208" Association="Self.FK__Menu__FID__24927208">
-            <End Role="Foods" EntitySet="Foods" />
-            <End Role="Menu" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderDetail__FID__1DE57479" Association="Self.FK__OrderDetail__FID__1DE57479">
-            <End Role="Foods" EntitySet="Foods" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="OFDEL" Association="Self.OFDEL">
-            <End Role="Foods" EntitySet="Foods" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderDetail__OID__1CF15040" Association="Self.FK__OrderDetail__OID__1CF15040">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__UID__164452B1" Association="Self.FK__Orders__UID__164452B1">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="ODEL" Association="Self.ODEL">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Menu__RID__239E4DCF" Association="Self.FK__Menu__RID__239E4DCF">
+          <AssociationSet Name="FK__Food__RID__145C0A3F" Association="Self.FK__Food__RID__145C0A3F">
             <End Role="Resturant" EntitySet="Resturants" />
-            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Food" EntitySet="Foods" />
           </AssociationSet>
           <AssociationSet Name="RDEL" Association="Self.RDEL">
             <End Role="Resturant" EntitySet="Resturants" />
-            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Food" EntitySet="Foods" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__UID__182C9B23" Association="Self.FK__Orders__UID__182C9B23">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__FID__1920BF5C" Association="FOSWSDBModel.FK__Orders__FID__1920BF5C">
+            <End Role="Food" EntitySet="Foods" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__Orders__FID__1920BF5C">
+          <End Type="FOSWSDBModel.Food" Role="Food" Multiplicity="0..1" />
+          <End Type="FOSWSDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="FID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="FID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -487,18 +255,22 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
         <EntityContainerMapping StorageEntityContainer="FOSWSDBModelStoreContainer" CdmEntityContainer="FOSWSDB">
           <EntitySetMapping Name="Foods">
             <EntityTypeMapping TypeName="FOSWSDBModel.Food">
-              <MappingFragment StoreEntitySet="Foods">
+              <MappingFragment StoreEntitySet="Food">
                 <ScalarProperty Name="FID" ColumnName="FID" />
                 <ScalarProperty Name="Fname" ColumnName="Fname" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Fqty" ColumnName="Fqty" />
+                <ScalarProperty Name="RID" ColumnName="RID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="FOSWSDBModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="FID" ColumnName="FID" />
                 <ScalarProperty Name="OID" ColumnName="OID" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Oqty" ColumnName="Oqty" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -525,25 +297,6 @@ warning 6002: The table/view 'FOSWSDB.dbo.OrderDetails' does not have a primary 
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="FOSWSDBModel.Menu">
-              <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="RID" ColumnName="RID" />
-                <ScalarProperty Name="FID" ColumnName="FID" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="FOSWSDBModel.OrderDetail">
-              <MappingFragment StoreEntitySet="OrderDetails">
-                <ScalarProperty Name="OID" ColumnName="OID" />
-                <ScalarProperty Name="FID" ColumnName="FID" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
