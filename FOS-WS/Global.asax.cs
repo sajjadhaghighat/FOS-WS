@@ -19,5 +19,7 @@ namespace FOS_WS
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+      
     }
 }

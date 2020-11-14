@@ -7,6 +7,7 @@ using System.Web.Http;
 using FOS_WS.Models;
 using System.Web.Http.Description;
 using Newtonsoft.Json.Linq;
+using FOS_WS.Filters;
 
 namespace FOS_WS.Services.Authentication
 {
@@ -15,11 +16,10 @@ namespace FOS_WS.Services.Authentication
         private FOSWSDB db = new FOSWSDB();
 
 
-        // POST: api/Register
-        [ResponseType(typeof(User))]
+        //[ResponseType(typeof(User))]
         [Route("~/api/register")]
         [HttpPost]
-        public IHttpActionResult PostUser([FromBody] JObject data)
+        public IHttpActionResult register([FromBody] JObject data)
         {
             if (!ModelState.IsValid)
             {
@@ -28,6 +28,11 @@ namespace FOS_WS.Services.Authentication
             try
             {
                 User user = data["udata"].ToObject<User>();
+                var q = (from a in db.Users select a).Where(a => a.Username == user.Username).SingleOrDefault();
+                if(q != null)
+                {
+                    return BadRequest("Error : Username Unavailable");
+                }
                 db.Users.Add(user);
                 if (user.Type == "Resturant")
                 {
@@ -47,6 +52,63 @@ namespace FOS_WS.Services.Authentication
 
         }
 
+
+        /*[Route("~/api/login")]
+        [HttpPost]
+        public IHttpActionResult login(User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var q = (from a in db.Users select a).Where(a => a.Username == user.Username && a.Password == user.Password).SingleOrDefault();
+                if (q != null)
+                {
+                    return Ok("Login successfully");
+                }
+                else
+                {
+                    return BadRequest("Error : Information is Incorrect!.");
+                }
+                
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Fill All Properties");
+            }
+
+        }*/
+
+
+        [RFilter]
+        [Route("~/api/users")]
+        [HttpGet]
+        public IHttpActionResult getusers()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var q = (from a in db.Users select a);
+                if (q != null)
+                {
+                    return Ok(q);
+                }
+                else
+                {
+                    return BadRequest("Error : Information is Incorrect!.");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Fill All Properties");
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {

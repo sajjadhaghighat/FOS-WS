@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FOS_WS.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -19,6 +20,9 @@ namespace FOS_WS
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Filters.Add(new BasicAuthenticationAttribute());
+            config.Filters.Add(new RFilter());
         }
     }
 }
