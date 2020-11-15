@@ -196,7 +196,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Authentication\AuthController.cs" />
-    <Compile Include="Services\Ordering\OrderingController.cs" />
+    <Compile Include="Services\Ordering\OrdersController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
