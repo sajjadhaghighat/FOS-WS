@@ -198,7 +198,6 @@
     <Compile Include="Services\Authentication\AuthController.cs" />
     <Compile Include="Services\Ordering\OrdersController.cs" />
     <Compile Include="Services\Panel\menuController.cs" />
-    <Compile Include="Services\Resturant\ResturantsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
