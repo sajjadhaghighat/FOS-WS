@@ -198,6 +198,7 @@
     <Compile Include="Services\Authentication\AuthController.cs" />
     <Compile Include="Services\Ordering\OrdersController.cs" />
     <Compile Include="Services\Panel\menuController.cs" />
+    <Compile Include="Services\Resturant\ResturantsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -269,7 +270,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Services\Resturant\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
