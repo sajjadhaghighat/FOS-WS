@@ -45,44 +45,14 @@ namespace FOS_WS.Services.Authentication
             }
             catch (Exception e)
             {
-                return BadRequest("Fill All Properties");
+                return BadRequest(e.ToString());
             }
 
 
 
         }
 
-
-        /*[Route("~/api/login")]
-        [HttpPost]
-        public IHttpActionResult login(User user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var q = (from a in db.Users select a).Where(a => a.Username == user.Username && a.Password == user.Password).SingleOrDefault();
-                if (q != null)
-                {
-                    return Ok("Login successfully");
-                }
-                else
-                {
-                    return BadRequest("Error : Information is Incorrect!.");
-                }
-                
-            }
-            catch (Exception e)
-            {
-                return BadRequest("Fill All Properties");
-            }
-
-        }*/
-
-
-        [RFilter]
+        [RFilter(Role ="admin")]
         [Route("~/api/users")]
         [HttpGet]
         public IHttpActionResult getusers()
@@ -106,7 +76,7 @@ namespace FOS_WS.Services.Authentication
             }
             catch (Exception e)
             {
-                return BadRequest("Fill All Properties");
+                return BadRequest(e.ToString());
             }
         }
 

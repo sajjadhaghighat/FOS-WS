@@ -21,8 +21,6 @@ namespace FOS_WS
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Filters.Add(new BasicAuthenticationAttribute());
-            config.Filters.Add(new RFilter());
         }
     }
 }
