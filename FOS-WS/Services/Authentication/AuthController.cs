@@ -8,6 +8,7 @@ using FOS_WS.Models;
 using System.Web.Http.Description;
 using Newtonsoft.Json.Linq;
 using FOS_WS.Filters;
+using System.Data.Entity;
 
 namespace FOS_WS.Services.Authentication
 {
@@ -37,6 +38,7 @@ namespace FOS_WS.Services.Authentication
                 if (user.Type == "Resturant")
                 {
                     Resturant resturant = data["rdata"].ToObject<Resturant>();
+                    resturant.UID = user.UID;
                     db.Resturants.Add(resturant);
                 }
                 //db.Resturants.Add(resturant);
@@ -55,7 +57,7 @@ namespace FOS_WS.Services.Authentication
         [RFilter(Role ="admin")]
         [Route("~/api/users")]
         [HttpGet]
-        public IHttpActionResult getusers()
+        public IHttpActionResult Getusers()
         {
             if (!ModelState.IsValid)
             {
@@ -63,7 +65,7 @@ namespace FOS_WS.Services.Authentication
             }
             try
             {
-                var q = (from a in db.Users select a);
+                var q = from a in db.Users select a;
                 if (q != null)
                 {
                     return Ok(q);

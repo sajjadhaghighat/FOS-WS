@@ -15,6 +15,8 @@ namespace FOS_WS.Filters
     public class RFilter : AuthorizeAttribute
     {
         public string Role { get; set; }
+        public static int uid { get; set; }
+
         private FOSWSDB db = new FOSWSDB();
             public override void OnAuthorization(System.Web.Http.Controllers.HttpActionContext actionContext)
             {
@@ -44,17 +46,17 @@ namespace FOS_WS.Filters
                     var userName = usernamePasswordArray[0];
                     var password = usernamePasswordArray[1];
 
-                    // Replace this with your own system of security / means of validating credentials
+                // Replace this with your own system of security / means of validating credentials
                     var isValid = (from a in db.Users select a).Where(a => a.Username == userName && a.Password == password && a.Type == this.Role).SingleOrDefault();
-
                     if (isValid != null)
                     {
                         var principal = new GenericPrincipal(new GenericIdentity(userName), null);
                         Thread.CurrentPrincipal = principal;
-
+                        RFilter.uid = isValid.UID;
                         return true;
                     }
                     return false;
+
                 }
                 else
                 {

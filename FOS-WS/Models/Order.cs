@@ -23,7 +23,7 @@ namespace FOS_WS.Models
         public Nullable<int> UID { get; set; }
         public Nullable<int> FID { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Food Food { get; set; }
+        public virtual User User { get; set; }
     }
 }

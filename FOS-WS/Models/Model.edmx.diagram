@@ -4,15 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9abaa90a651c4e048a588f400fc61063" Name="Diagram1">
-        <EntityTypeShape EntityType="FOSWSDBModel.Food" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FOSWSDBModel.Order" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FOSWSDBModel.Resturant" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FOSWSDBModel.User" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <AssociationConnector Association="FOSWSDBModel.FK__Food__RID__145C0A3F" ManuallyRouted="false" />
+      <Diagram DiagramId="71e327d0c5684674a263b6a0a2846837" Name="Diagram1">
+        <EntityTypeShape EntityType="FOSWSDBModel.Food" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FOSWSDBModel.Order" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FOSWSDBModel.Resturant" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FOSWSDBModel.User" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="FOSWSDBModel.FK__Food__RID__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="FOSWSDBModel.FK__Orders__FID__1B0907CE" ManuallyRouted="false" />
         <AssociationConnector Association="FOSWSDBModel.RDEL" ManuallyRouted="false" />
-        <AssociationConnector Association="FOSWSDBModel.FK__Orders__UID__182C9B23" ManuallyRouted="false" />
-        <AssociationConnector Association="FOSWSDBModel.FK__Orders__FID__1920BF5C" />
+        <AssociationConnector Association="FOSWSDBModel.FK__Orders__UID__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="FOSWSDBModel.FK__Resturant__UID__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="FOSWSDBModel.UDEL" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

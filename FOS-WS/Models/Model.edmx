@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FOSWSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FOSWSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Food">
           <Key>
             <PropertyRef Name="FID" />
@@ -36,6 +36,7 @@
           <Property Name="RID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Rname" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Rstatus" Type="nvarchar" MaxLength="255" />
+          <Property Name="UID" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -48,7 +49,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Food__RID__145C0A3F">
+        <Association Name="FK__Food__RID__164452B1">
           <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1" />
           <End Role="Food" Type="Self.Food" Multiplicity="*" />
           <ReferentialConstraint>
@@ -60,7 +61,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__FID__1920BF5C">
+        <Association Name="FK__Orders__FID__1B0907CE">
           <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -72,7 +73,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__UID__182C9B23">
+        <Association Name="FK__Orders__UID__1A14E395">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -80,6 +81,18 @@
               <PropertyRef Name="UID" />
             </Principal>
             <Dependent Role="Orders">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resturant__UID__1273C1CD">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Resturant" Type="Self.Resturant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Resturant">
               <PropertyRef Name="UID" />
             </Dependent>
           </ReferentialConstraint>
@@ -98,29 +111,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="UDEL">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Resturant" Type="Self.Resturant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Resturant">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FOSWSDBModelStoreContainer">
           <EntitySet Name="Food" EntityType="Self.Food" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resturant" EntityType="Self.Resturant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Food__RID__145C0A3F" Association="Self.FK__Food__RID__145C0A3F">
+          <AssociationSet Name="FK__Food__RID__164452B1" Association="Self.FK__Food__RID__164452B1">
             <End Role="Resturant" EntitySet="Resturant" />
             <End Role="Food" EntitySet="Food" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__FID__1920BF5C" Association="Self.FK__Orders__FID__1920BF5C">
+          <AssociationSet Name="FK__Orders__FID__1B0907CE" Association="Self.FK__Orders__FID__1B0907CE">
             <End Role="Food" EntitySet="Food" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__UID__182C9B23" Association="Self.FK__Orders__UID__182C9B23">
+          <AssociationSet Name="FK__Orders__UID__1A14E395" Association="Self.FK__Orders__UID__1A14E395">
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resturant__UID__1273C1CD" Association="Self.FK__Resturant__UID__1273C1CD">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Resturant" EntitySet="Resturant" />
           </AssociationSet>
           <AssociationSet Name="RDEL" Association="Self.RDEL">
             <End Role="Resturant" EntitySet="Resturant" />
             <End Role="Food" EntitySet="Food" />
           </AssociationSet>
+          <AssociationSet Name="UDEL" Association="Self.UDEL">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Resturant" EntitySet="Resturant" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FOSWSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -134,9 +170,9 @@
           <Property Name="Price" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Fqty" Type="Int32" Nullable="false" />
           <Property Name="RID" Type="Int32" />
-          <NavigationProperty Name="Resturant" Relationship="Self.FK__Food__RID__145C0A3F" FromRole="Food" ToRole="Resturant" />
+          <NavigationProperty Name="Resturant" Relationship="Self.FK__Food__RID__164452B1" FromRole="Food" ToRole="Resturant" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__FID__1B0907CE" FromRole="Food" ToRole="Orders" />
           <NavigationProperty Name="Resturant1" Relationship="Self.RDEL" FromRole="Food" ToRole="Resturant" />
-          <NavigationProperty Name="Orders" Relationship="FOSWSDBModel.FK__Orders__FID__1920BF5C" FromRole="Food" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -149,9 +185,9 @@
           <Property Name="Price" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Orders__UID__182C9B23" FromRole="Orders" ToRole="Users" />
           <Property Name="FID" Type="Int32" />
-          <NavigationProperty Name="Food" Relationship="FOSWSDBModel.FK__Orders__FID__1920BF5C" FromRole="Order" ToRole="Food" />
+          <NavigationProperty Name="Food" Relationship="Self.FK__Orders__FID__1B0907CE" FromRole="Orders" ToRole="Food" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Orders__UID__1A14E395" FromRole="Orders" ToRole="Users" />
         </EntityType>
         <EntityType Name="Resturant">
           <Key>
@@ -160,8 +196,11 @@
           <Property Name="RID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rstatus" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Foods" Relationship="Self.FK__Food__RID__145C0A3F" FromRole="Resturant" ToRole="Food" />
+          <Property Name="UID" Type="Int32" />
+          <NavigationProperty Name="Foods" Relationship="Self.FK__Food__RID__164452B1" FromRole="Resturant" ToRole="Food" />
           <NavigationProperty Name="Foods1" Relationship="Self.RDEL" FromRole="Resturant" ToRole="Food" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Resturant__UID__1273C1CD" FromRole="Resturant" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.UDEL" FromRole="Resturant" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -173,9 +212,11 @@
           <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UID__182C9B23" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UID__1A14E395" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Resturants" Relationship="Self.FK__Resturant__UID__1273C1CD" FromRole="Users" ToRole="Resturant" />
+          <NavigationProperty Name="Resturants1" Relationship="Self.UDEL" FromRole="Users" ToRole="Resturant" />
         </EntityType>
-        <Association Name="FK__Food__RID__145C0A3F">
+        <Association Name="FK__Food__RID__164452B1">
           <End Role="Resturant" Type="Self.Resturant" Multiplicity="0..1" />
           <End Role="Food" Type="Self.Food" Multiplicity="*" />
           <ReferentialConstraint>
@@ -184,6 +225,18 @@
             </Principal>
             <Dependent Role="Food">
               <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__FID__1B0907CE">
+          <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="FID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="FID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -201,7 +254,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__UID__182C9B23">
+        <Association Name="FK__Orders__UID__1A14E395">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -213,40 +266,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FOSWSDB" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK__Resturant__UID__1273C1CD">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Resturant" Type="Self.Resturant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Resturant">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UDEL">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Resturant" Type="Self.Resturant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Resturant">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FOSWSDB" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="Foods" EntityType="Self.Food" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Resturants" EntityType="Self.Resturant" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Food__RID__145C0A3F" Association="Self.FK__Food__RID__145C0A3F">
+          <AssociationSet Name="FK__Food__RID__164452B1" Association="Self.FK__Food__RID__164452B1">
             <End Role="Resturant" EntitySet="Resturants" />
             <End Role="Food" EntitySet="Foods" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__FID__1B0907CE" Association="Self.FK__Orders__FID__1B0907CE">
+            <End Role="Food" EntitySet="Foods" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="RDEL" Association="Self.RDEL">
             <End Role="Resturant" EntitySet="Resturants" />
             <End Role="Food" EntitySet="Foods" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__UID__182C9B23" Association="Self.FK__Orders__UID__182C9B23">
+          <AssociationSet Name="FK__Orders__UID__1A14E395" Association="Self.FK__Orders__UID__1A14E395">
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__FID__1920BF5C" Association="FOSWSDBModel.FK__Orders__FID__1920BF5C">
-            <End Role="Food" EntitySet="Foods" />
-            <End Role="Order" EntitySet="Orders" />
+          <AssociationSet Name="FK__Resturant__UID__1273C1CD" Association="Self.FK__Resturant__UID__1273C1CD">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Resturant" EntitySet="Resturants" />
+          </AssociationSet>
+          <AssociationSet Name="UDEL" Association="Self.UDEL">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Resturant" EntitySet="Resturants" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK__Orders__FID__1920BF5C">
-          <End Type="FOSWSDBModel.Food" Role="Food" Multiplicity="0..1" />
-          <End Type="FOSWSDBModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Food">
-              <PropertyRef Name="FID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="FID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -268,7 +343,6 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="FOSWSDBModel.Order">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="FID" ColumnName="FID" />
                 <ScalarProperty Name="OID" ColumnName="OID" />
                 <ScalarProperty Name="Oqty" ColumnName="Oqty" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -276,6 +350,7 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="FID" ColumnName="FID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -285,6 +360,7 @@
                 <ScalarProperty Name="RID" ColumnName="RID" />
                 <ScalarProperty Name="Rname" ColumnName="Rname" />
                 <ScalarProperty Name="Rstatus" ColumnName="Rstatus" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
