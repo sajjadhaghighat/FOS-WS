@@ -14,6 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FOS_WS.Services.Panel
 {
+    [RFilter(Role = "Resturant")]
     public class PanelController : ApiController
     {
         private FOSWSDB db = new FOSWSDB();
@@ -36,9 +37,8 @@ namespace FOS_WS.Services.Panel
 
             return Ok(food);
         }
-
-        // PUT: api/menu/5
-        [RFilter(Role ="Resturant")]
+//=================================================================================================
+        // PUT: api/update-resturant/5
         [Route("~/api/update-resturant/{id}")]
         [HttpPut]
         public IHttpActionResult PutResturant(int id, [FromBody] Resturant resturant)
@@ -74,11 +74,32 @@ namespace FOS_WS.Services.Panel
                 }
             }
 
-            return Ok("Information Updated");
+            return Ok("Resturant Information Updated");
         }
 
-        // POST: api/menu
+
+        // DELETE: api/del-resturant/5
         [RFilter(Role = "Resturant")]
+        [Route("~/api/del-resturant/{id}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteRes(int id)
+        {
+            Resturant res = db.Resturants.Find(id);
+            User user = db.Users.Find(res.UID);
+            if (res == null || user == null)
+            {
+                return NotFound();
+            }
+
+            db.Users.Remove(user);
+            db.Resturants.Remove(res);
+            db.SaveChanges();
+
+            return Ok("Account Deleted Successfully.");
+        }
+
+        //===============================================================================================
+        // POST: api/define-food
         [Route("~/api/define-food")]
         [HttpPost]
         public IHttpActionResult PostFood(Food food)
@@ -99,17 +120,56 @@ namespace FOS_WS.Services.Panel
                 return BadRequest(e.Message);
             }
 
-
             return Ok("Food Added To Your Resturant Menu");
         }
 
+        // PUT: api/update-food/5
+        [Route("~/api/update-food/{id}")]
+        [HttpPut]
+        public IHttpActionResult PutFood(int id, [FromBody] Food food)
+        {
+
+            var q = (from a in db.Foods where id == a.FID select a).SingleOrDefault();
+            var access = (from a in db.Resturants where q.RID == a.RID select a).SingleOrDefault();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (RFilter.uid != access.UID)
+            {
+                return BadRequest("You Can't Access to This Section");
+            }
+
+            q.Fname = food.Fname;
+            q.Description = food.Description;
+            q.Fqty = food.Fqty;
+            q.Price = food.Price;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FoodExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok("Food Information Updated");
+        }
 
 
-        // DELETE: api/menu/5
-        [RFilter(Role = "Resturant")]
-        [Route("~/api/del-resturant/{id}")]
+        // DELETE: api/del-food/5
+        [Route("~/api/del-food/{id}")]
         [HttpDelete]
-        public IHttpActionResult DeleteRes(int id)
+        public IHttpActionResult DeleteFood(int id)
         {
             Resturant res = db.Resturants.Find(id);
             User user = db.Users.Find(res.UID);
@@ -124,6 +184,26 @@ namespace FOS_WS.Services.Panel
 
             return Ok("Account Deleted Successfully.");
         }
+
+        // GET: api/menu
+        [Route("~/api/menu")]
+        [HttpGet]
+        public IHttpActionResult GetMenu()
+        {
+            try
+            {
+                Resturant res = (from a in db.Resturants where a.UID == RFilter.uid select a).SingleOrDefault();
+                var menu = (from a in db.Foods where a.RID == res.RID select new {a.Fname,a.Description,a.Fqty,a.Price});
+                return Ok(menu);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+//=================================================================================================
 
         protected override void Dispose(bool disposing)
         {
