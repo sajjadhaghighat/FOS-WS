@@ -20,7 +20,7 @@ namespace FOS_WS
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            
+
         }
     }
 }

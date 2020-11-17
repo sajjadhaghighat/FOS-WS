@@ -18,7 +18,6 @@ namespace FOS_WS.Models
         public FOSWSDB()
             : base("name=FOSWSDB")
         {
-            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

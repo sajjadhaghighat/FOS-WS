@@ -43,7 +43,6 @@ namespace FOS_WS.Services.Panel
         [HttpPut]
         public IHttpActionResult PutResturant(int id, [FromBody] Resturant resturant)
         {
-
             var q = (from a in db.Resturants where id == a.RID select a).SingleOrDefault(); 
             if (!ModelState.IsValid)
             {

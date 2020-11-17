@@ -18,7 +18,6 @@ namespace FOS_WS.Models
         public Resturant()
         {
             this.Foods = new HashSet<Food>();
-            this.Foods1 = new HashSet<Food>();
         }
     
         public int RID { get; set; }
@@ -28,9 +27,6 @@ namespace FOS_WS.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Food> Foods { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Food> Foods1 { get; set; }
         public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
     }
 }

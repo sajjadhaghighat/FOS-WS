@@ -19,7 +19,6 @@ namespace FOS_WS.Models
         {
             this.Orders = new HashSet<Order>();
             this.Resturants = new HashSet<Resturant>();
-            this.Resturants1 = new HashSet<Resturant>();
         }
     
         public int UID { get; set; }
@@ -33,7 +32,5 @@ namespace FOS_WS.Models
         public virtual ICollection<Order> Orders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resturant> Resturants { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Resturant> Resturants1 { get; set; }
     }
 }

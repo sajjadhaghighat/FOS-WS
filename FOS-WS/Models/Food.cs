@@ -30,6 +30,5 @@ namespace FOS_WS.Models
         public virtual Resturant Resturant { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual Resturant Resturant1 { get; set; }
     }
 }
