@@ -20,6 +20,7 @@ namespace FOS_WS.Services.Authentication
         //[ResponseType(typeof(User))]
         [Route("~/api/register")]
         [HttpPost]
+        [AllowAnonymous]
         public IHttpActionResult register([FromBody] JObject data)
         {
             if (!ModelState.IsValid)
@@ -49,9 +50,6 @@ namespace FOS_WS.Services.Authentication
             {
                 return BadRequest(e.ToString());
             }
-
-
-
         }
 
         [RFilter(Role ="admin")]

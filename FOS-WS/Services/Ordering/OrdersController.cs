@@ -70,7 +70,7 @@ namespace FOS_WS.Services.Ordering
                     order.Price = (int.Parse(food.Price) * order.Oqty).ToString();
                     order.Timestamp = (DateTime.Now).ToString();
                     order.Status = "Waiting for Confirm...";
-                    db.Foods.Add(food);
+                    db.Orders.Add(order);
                     db.SaveChanges();
                 }
                 else
@@ -146,12 +146,6 @@ namespace FOS_WS.Services.Ordering
                 return BadRequest(e.Message);
             }
         }
-
-
-
-
-
-
 
 
 

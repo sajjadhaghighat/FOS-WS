@@ -19,12 +19,6 @@ namespace FOS_WS.Services.Panel
     {
         private FOSWSDB db = new FOSWSDB();
 
-        // GET: api/menu
-        public IQueryable<Food> GetFoods()
-        {
-            return db.Foods;
-        }
-
         // GET: api/menu/5
         [ResponseType(typeof(Food))]
         public IHttpActionResult GetFood(int id)
@@ -97,7 +91,7 @@ namespace FOS_WS.Services.Panel
             return Ok("Account Deleted Successfully.");
         }
 
-        //===============================================================================================
+//=================================================================================================
         // POST: api/define-food
         [Route("~/api/define-food")]
         [HttpPost]
@@ -170,18 +164,16 @@ namespace FOS_WS.Services.Panel
         [HttpDelete]
         public IHttpActionResult DeleteFood(int id)
         {
-            Resturant res = db.Resturants.Find(id);
-            User user = db.Users.Find(res.UID);
-            if (res == null || user == null)
+            Food res = db.Foods.Find(id);
+            if (res == null)
             {
                 return NotFound();
             }
 
-            db.Users.Remove(user);
-            db.Resturants.Remove(res);
+            db.Foods.Remove(res);
             db.SaveChanges();
 
-            return Ok("Account Deleted Successfully.");
+            return Ok("Food Delete Successfully.");
         }
 
         // GET: api/menu
