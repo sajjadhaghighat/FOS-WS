@@ -1,0 +1,65 @@
+version: '3.7'
+services:
+  mysql:
+    image: "mysql:latest"
+    container_name: mysql
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD : 123456
+    ports:
+      - 3306:3306
+
+  app:
+    depends_on:
+    - mysql
+    image: "phpmyadmin/phpmyadmin:latest"
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST : mysql
+    ports:
+      - 8080:80
+
+  customer:
+    image: "sajadkh/customer:latest"
+    container_name: customer
+    depends_on:
+      - mysql
+    command: sh -c "./wait && ./start.sh"
+    environment:
+      - WAIT_HOSTS= mysql:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=40
+    ports:
+      - 8002:8002
+
+  restaurant:
+    image: "sajadkh/restaurant:latest"
+    container_name: restaurant
+    depends_on:
+      - mysql
+    command: sh -c "./wait && ./start.sh"
+    environment:
+      - WAIT_HOSTS=mysql:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=40
+    ports:
+      - 8001:8001
+
+  authentication:
+    image: "sajadkh/authentication:latest"
+    container_name: authentication
+    depends_on:
+      - mysql
+    command: sh -c "./wait && ./start.sh"
+    environment:
+      - WAIT_HOSTS=mysql:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=40
+    ports:
+      - 8000:8000
+

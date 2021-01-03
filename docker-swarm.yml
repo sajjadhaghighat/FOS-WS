@@ -1,0 +1,96 @@
+version: '3.7'
+services:
+  mysql:
+    image: "mysql:latest"
+    container_name: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD : 123456
+    deploy:
+      placement:
+        constraints : [node.role == manager]
+    ports:
+      - 3306:3306
+
+  app:
+    depends_on:
+    - mysql
+    image: "phpmyadmin/phpmyadmin:latest"
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST : mysql
+    deploy:
+      placement:
+        constraints : [node.role == manager]
+    ports:
+      - 8003:80
+
+  customer:
+    image: "sajadkh/customer:latest"
+    container_name: customer
+    depends_on:
+      - mysql
+    command: sh -c "./wait && ./start.sh"
+    environment:
+      - WAIT_HOSTS= mysql:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=40
+    deploy:
+      replicas: 1
+      placement:
+        constraints : [node.role == manager]
+    ports:
+      - 8002:8002
+
+  restaurant:
+    image: "sajadkh/restaurant:latest"
+    container_name: restaurant
+    depends_on:
+      - mysql
+    command: sh -c "./wait && ./start.sh"
+    environment:
+      - WAIT_HOSTS=mysql:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=40
+    deploy:
+      replicas: 1
+      placement:
+        constraints : [node.role == manager]
+    ports:
+      - 8001:8001
+
+  authentication:
+    image: "sajadkh/authentication:latest"
+    container_name: authentication
+    depends_on:
+      - mysql
+    command: sh -c "./wait && ./start.sh"
+    environment:
+      - WAIT_HOSTS=mysql:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=40
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      placement:
+        constraints : [node.role == worker]
+    ports:
+      - 8000:8000
+
+  visualizer:
+    image: "dockersamples/visualizer:stable"
+    ports:
+      - 8080:8080
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints : [node.role == manager]
+
